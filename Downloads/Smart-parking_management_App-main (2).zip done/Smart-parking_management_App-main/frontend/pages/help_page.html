@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support - Smart Parking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: white;
+            min-height: 100vh;
+            
+            
+        }
+
+        .help-container {
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        /* HEADER */
+        header {
+            background-color: rgb(26, 37, 163);;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .menu-icon span {
+            width: 100%;
+            height: 3px;
+            background-color: #1a1f71;
+            border-radius: 2px;
+        }
+
+        .notification_btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+
+        }
+        .notification_btn i {
+            margin-left: 8px;
+        }
+        
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #1a1f71;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo-text h1 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+       
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #c0ef05;
+        }
+
+        .user-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #c6c7dd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .user-icon::before {
+            content: "👤";
+            font-size: 24px;
+            color: white;
+        }
+    
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        
+
+        
+        .page-title {
+            color:#1a1f71;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 18px;
+        }
+
+        /* SEARCH BAR */
+        .search-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(29, 13, 130, 0.3);
+            margin-bottom: 40px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px 60px 18px 24px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #0815a7;
+            box-shadow: 0 0 0 4px rgba(12, 24, 156, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #667eea;
+        }
+
+        /* QUICK ACTIONS */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(18, 18, 121, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(13, 21, 104, 0.3);
+        }
+
+        .action-icon {
+            width: 70px;
+            height: 70px;
+            background: #1a1f71;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 15px;
+            color: white;
+        }
+
+        .action-card h3 {
+            font-size: 18px;
+            color: #1a1f71;
+            margin-bottom: 8px;
+        }
+
+        .action-card p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* FAQ SECTION */
+        .faq-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(31, 22, 149, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1f71;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .faq-categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active {
+            background: #1a1f71;
+            border-color: #6f79ef;
+            color: white;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item.active {
+            border-color: #1a1f71;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #f0f2f5;
+        }
+
+        .faq-question h4 {
+            font-size: 16px;
+            color: #1a1f71;
+            margin: 0;
+        }
+
+        .faq-toggle {
+            font-size: 20px;
+            color: #1a1f71;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 20px;
+            color: #555;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* CONTACT SECTION */
+        .contact-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(19, 67, 172, 0.3);
+            text-align: center;
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            background: #1a1f71;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 20px;
+            color: white;
+        }
+
+        .contact-card h3 {
+            font-size: 20px;
+            color: #1a1f71;
+            margin-bottom: 10px;
+        }
+
+        .contact-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #182e91;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:hover {
+            background: #344cd7;
+            transform: translateY(-2px);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 32px;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-section,
+            .contact-card {
+                padding: 25px;
+            }
+
+            .faq-categories {
+                flex-direction: column;
+            }
+
+            .category-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-section"> 
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <div class="logo-text">
+                    <h1>SMART PARKING</h1>
+                    
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="./find_parking.html" class="active">Home</a></li>
+                <li><a href="./booking_page.html">Booking</a></li>
+                <li><a href="./User_dashboard.html">Dashboard</a></li>
+                <li><a href="./help_page.html">Help</a></li>
+                <a href="./notification.html" class="notification_btn">Notification<i class="fas fa-bell"></i></a>
+            </ul>
+        </nav>
+    </div>
+        <a href="./profile_page.html">
+    <div class="user-icon"></div>
+</a>
+    </header>
+    <div class="help-container">
+        
+
+        <!-- SEARCH -->
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" placeholder="Search for help..." id="searchInput" oninput="searchFAQ()">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="quick-actions">
+            <a href="#faq" class="action-card" onclick="showCategory('booking')">
+                <div class="action-icon">📅</div>
+                <h3>Booking Help</h3>
+                <p>Learn how to make and manage bookings</p>
+            </a>
+            <a href="#faq" class="action-card" onclick="showCategory('payment')">
+                <div class="action-icon">💳</div>
+                <h3>Payment Issues</h3>
+                <p>Resolve payment and billing problems</p>
+            </a>
+            <a href="#faq" class="action-card" onclick="showCategory('account')">
+                <div class="action-icon">👤</div>
+                <h3>Account Settings</h3>
+                <p>Manage your profile and preferences</p>
+            </a>
+            <a href="#contact" class="action-card">
+                <div class="action-icon">💬</div>
+                <h3>Contact Support</h3>
+                <p>Get in touch with our team</p>
+            </a>
+        </div>
+
+        <!-- FAQ SECTION -->
+        <div class="faq-section" id="faq">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+
+            <div class="faq-categories">
+                <button class="category-btn active" onclick="filterCategory('all')">All</button>
+                <button class="category-btn" onclick="filterCategory('booking')">Booking</button>
+                <button class="category-btn" onclick="filterCategory('payment')">Payment</button>
+                <button class="category-btn" onclick="filterCategory('account')">Account</button>
+                <button class="category-btn" onclick="filterCategory('parking')">Parking</button>
+            </div>
+
+            <div class="faq-list" id="faqList">
+                <!-- Booking FAQs -->
+                <div class="faq-item" data-category="booking">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>How do I book a parking space?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            To book a parking space:<br>
+                            1. Select your desired location from the map or list<br>
+                            2. Choose your date, time, and duration<br>
+                            3. Enter your vehicle details<br>
+                            4. Review your booking and proceed to payment<br>
+                            5. You'll receive a confirmation code via email and SMS
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="booking">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Can I modify or cancel my booking?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! You can modify or cancel your booking up to 2 hours before your scheduled arrival time. Go to "My Bookings" and select the booking you want to change. Cancellations made more than 24 hours in advance receive a full refund. Cancellations within 24 hours are subject to a 50% cancellation fee.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="booking">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>What if I arrive late to my booking?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Your parking spot is reserved for 30 minutes after your scheduled time. If you arrive after this grace period, your spot may be reassigned, but we'll do our best to find you an alternative space. We recommend contacting support if you know you'll be late.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment FAQs -->
+                <div class="faq-item" data-category="payment">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>What payment methods do you accept?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We accept multiple payment methods including:<br>
+                            • MTN Mobile Money<br>
+                            • Airtel Money<br>
+                            • Credit/Debit Cards (Visa, Mastercard)<br>
+                            • Cash payment at location (selected locations only)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="payment">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Is my payment information secure?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely! We use industry-standard encryption (SSL) to protect all payment information. We never store your full card details on our servers. All transactions are processed through secure, PCI-compliant payment gateways.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="payment">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>How do refunds work?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Refunds are processed within 5-7 business days to your original payment method. For mobile money refunds, the amount is credited back to your account within 24 hours. You'll receive an email confirmation when the refund is processed.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account FAQs -->
+                <div class="faq-item" data-category="account">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>How do I create an account?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Click on "Sign Up" at the top of the page and choose to register as a user or parking space owner. Fill in your details, verify your email address, and you're ready to start booking or listing parking spaces!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="account">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>How do I reset my password?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Click "Forgot Password" on the login page. Enter your email address and we'll send you a password reset link. Follow the instructions in the email to create a new password.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="account">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Can I add multiple vehicles to my account?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! You can add unlimited vehicles to your profile. Go to Profile > My Vehicles and click "Add New Vehicle". This makes booking faster as you can select from your saved vehicles.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parking FAQs -->
+                <div class="faq-item" data-category="parking">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>How do I find my reserved parking spot?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Your booking confirmation includes detailed directions and a spot number. Most locations also have digital displays showing your spot number. Look for signs with your booking code, or ask the attendant who can help you locate your reserved space.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="parking">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>What if my parking spot is occupied?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Contact the on-site attendant or call our support line immediately. We'll either clear the spot within 10 minutes or provide you with an alternative spot at no extra charge. Your satisfaction is guaranteed!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="parking">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Can I extend my parking duration?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! You can extend your parking time through the app or by contacting support. Additional charges will be calculated based on the hourly rate. Extensions are subject to availability.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT SECTION -->
+        <div class="contact-section" id="contact">
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3>Email Support</h3>
+                <p>Get a response within 24 hours</p>
+                <a href="mailto:support@smartparking.rw" class="contact-btn">Send Email</a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">📞</div>
+                <h3>Phone Support</h3>
+                <p>Mon-Fri, 8AM-6PM EAT</p>
+                <a href="tel:+250788123456" class="contact-btn">Call Now</a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">💬</div>
+                <h3>Live Chat</h3>
+                <p>Chat with our support team</p>
+                <a href="#" class="contact-btn" onclick="openChat()">Start Chat</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const wasActive = faqItem.classList.contains('active');
+            
+            // Close all FAQs
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked FAQ if it wasn't already open
+            if (!wasActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        function filterCategory(category) {
+            const faqItems = document.querySelectorAll('.faq-item');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter FAQs
+            faqItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+                item.classList.remove('active');
+            });
+        }
+
+        function showCategory(category) {
+            // Scroll to FAQ section
+            document.getElementById('faq').scrollIntoView({ behavior: 'smooth' });
+            
+            // Wait for scroll then filter
+            setTimeout(() => {
+                const buttons = document.querySelectorAll('.category-btn');
+                buttons.forEach(btn => {
+                    if (btn.textContent.toLowerCase() === category) {
+                        btn.click();
+                    }
+                });
+            }, 500);
+        }
+
+        function searchFAQ() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question h4').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    if (searchTerm.length > 2) {
+                        item.classList.add('active');
+                    }
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Show all if search is cleared
+            if (searchTerm.length === 0) {
+                faqItems.forEach(item => {
+                    item.style.display = 'block';
+                    item.classList.remove('active');
+                });
+            }
+        }
+
+        function openChat() {
+            alert('💬 Live chat feature coming soon!\n\nIn the meantime, please email us at support@smartparking.rw or call +250 788 123 456');
+        }
+
+    </script>
+</body>
+</html>

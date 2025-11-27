@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Dashboard - Smart Parking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* NAVIGATION */
+         header {
+            background-color: rgb(26, 37, 163);;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .menu-icon span {
+            width: 100%;
+            height: 3px;
+            background-color: #1a1f71;
+            border-radius: 2px;
+        }
+        
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #1a1f71;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo-text h1 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .notification_btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+
+        }
+        .notification_btn i {
+            margin-left: 8px;
+        }
+
+       
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #c0ef05;
+        }
+
+        .user-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #c6c7dd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .user-icon::before {
+            content: "👤";
+            font-size: 24px;
+            color: white;
+        }
+        .notification-container {
+            position: relative;
+            margin-right: 20px;
+            cursor: pointer;
+            font-size: 28px;
+        }
+
+        /* MAIN CONTAINER */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* HEADER */
+        .dashboard-header {
+            margin-bottom: 40px;
+        }
+
+        .welcome-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .welcome-text h1 {
+            font-size: 32px;
+            color: #1a1f71;
+            margin-bottom: 8px;
+        }
+
+        .welcome-text p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .quick-book-btn {
+            padding: 14px 30px;
+            background: #1a1f71;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .quick-book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(7, 21, 79, 0.4);
+        }
+
+        /* STATS CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-icon.blue { background: #e3f2fd; }
+        .stat-icon.green { background: #e8f5e9; }
+        .stat-icon.orange { background: #fff3e0; }
+        .stat-icon.purple { background: #f3e5f5; }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #282d84;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* MAIN CONTENT */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* BOOKINGS SECTION */
+        .bookings-section,
+        .sidebar-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #14196e;
+        }
+
+        .view-all-link {
+            color: #152e9f;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .booking-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            color: #666;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: #1a1f71;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1a1f71;
+        }
+
+        .bookings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .booking-card {
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .booking-card:hover {
+            border-color: #0a1442;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.1);
+        }
+        
+        .checkout-btn, .cancel-btn {
+            margin-top: 15px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .checkout-btn {
+            background: #1a1f71;
+            color: white;
+        }
+        
+        .checkout-btn:hover {
+            background: #2d42b9;
+        }
+        
+        .cancel-btn {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .cancel-btn:hover {
+            background: #c0392b;
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .booking-location {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1f71;
+            margin-bottom: 4px;
+        }
+
+        .booking-code {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .booking-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #e8f5e9;
+            color: #27ae60;
+        }
+
+        .status-upcoming {
+            background: #e3f2fd;
+            color: #4421f3;
+        }
+
+        .status-completed {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .booking-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .detail-item {
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            color: #2f2d2d;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        /* QUICK ACTIONS */
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .action-btn:hover {
+            background: #152a85;
+            border-color: #4e6de9;
+            color: white;
+        }
+
+        .action-icon {
+            font-size: 20px;
+        }
+
+        .action-text {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* FOR RECENT LOCATIONS */
+        .location-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .location-item:hover {
+            background: #f8f9fa;
+        }
+
+        .location-icon {
+            width: 45px;
+            height: 45px;
+            background: #1a1f71;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .location-info h4 {
+            font-size: 14px;
+            color: #1a1f71;
+            margin-bottom: 4px;
+        }
+
+        .location-info p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 20px 15px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <header>
+        <div class="logo-section"> 
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <div class="logo-text">
+                    <h1>SMART PARKING</h1>
+                    
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="./find_parking.html" class="active">Home</a></li>
+                <li><a href="./booking_page.html">Booking</a></li>
+                <li><a href="./User_dashboard.html">Dashboard</a></li>
+                <li><a href="./help_page.html">Help</a></li>
+                <li><a href="./notification.html" class="notification_btn">Notification<i class="fas fa-bell"></i></a></li>
+            </ul>
+        </nav>
+    </div>
+        <a href="./profile_page.html">
+    <div class="user-icon"></div>
+</a>
+
+    </header>
+    <!-- MAIN CONTENT -->
+    <div class="dashboard-container">
+        <!-- HEADER -->
+        <div class="dashboard-header">
+            <div class="welcome-section">
+                <div class="welcome-text">
+                    <h1>Welcome back, <span id="userName">John</span>!</h1>
+                    <p id="currentDate">Today is Monday, November 21, 2025</p>
+                </div>
+                <a href="./booking_page.html" class="quick-book-btn" onclick="goToBooking()">+ Book Parking Now</a>
+            </div>
+        </div>
+
+        <!-- STATS CARDS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">🅿️</div>
+                </div>
+                <div class="stat-value" id="activeBookings">0</div>
+                <div class="stat-label">Active Bookings</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green">📅</div>
+                </div>
+                <div class="stat-value" id="totalBookings">0</div>
+                <div class="stat-label">Total Bookings</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon orange">💰</div>
+                </div>
+                <div class="stat-value" id="totalSpent">0</div>
+                <div class="stat-label">Total Spent (RWF)</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon purple">⭐</div>
+                </div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Reward Points</div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT GRID -->
+        <div class="content-grid">
+            <!-- BOOKINGS SECTION -->
+            <div class="bookings-section">
+                <div class="section-header">
+                    <h2 class="section-title">My Bookings</h2>
+                    <a href="#" class="view-all-link" onclick="goToBookings()">View All →</a>
+                </div>
+
+                <div class="booking-tabs">
+                    <button class="tab-btn active" onclick="filterBookings('active')">Active</button>
+                    <button class="tab-btn" onclick="filterBookings('upcoming')">Upcoming</button>
+                    <button class="tab-btn" onclick="filterBookings('past')">Past</button>
+                </div>
+
+                <div class="bookings-list" id="bookingsList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>No active bookings at the moment</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIDEBAR -->
+            <div class="sidebar-section">
+                <h3 class="section-title" style="margin-bottom: 20px;">Quick Actions</h3>
+                
+                <div class="quick-actions">
+                    <a href="#" class="action-btn" onclick="goToBooking()">
+                        <span class="action-icon"></span>
+                        <span class="action-text">New Booking</span>
+                    </a>
+                    <a href="#" class="action-btn" onclick="goToProfile()">
+                        <span class="action-icon"></span>
+                        <span class="action-text">My Profile</span>
+                    </a>
+                    <a href="#" class="action-btn" onclick="goToHelp()">
+                        <span class="action-icon"></span>
+                        <span class="action-text">Help & Support</span>
+                    </a>
+                    <a href="#" class="action-btn" onclick="logout()">
+                        <span class="action-icon"></span>
+                        <span class="action-text">Logout</span>
+                    </a>
+                </div>
+
+                <h3 class="section-title" style="margin: 30px 0 20px;">Recent Locations</h3>
+                
+                <div id="recentLocations">
+                    <div class="empty-state" style="text-align: center; padding: 20px; color: #999;">
+                        <p>No recent locations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkAuth("driver")) {
+                return;
+            }
+            loadUserData();
+            loadBookings();
+            updateDate();
+            updateNotificationBadge();
+            setInterval(updateNotificationBadge, 60000);
+        });
+
+        async function loadUserData() {
+            const driverId = localStorage.getItem("driver_id");
+            if (!driverId) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/driver/profile/${driverId}`);
+                const data = await response.json();
+                
+                if (data.success && data.driver) {
+                    const driver = data.driver;
+                    document.getElementById('userName').textContent = driver.username || 'User';
+                    localStorage.setItem('userProfile', JSON.stringify(driver));
+                } else {
+                    const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+                    if (userProfile.username) {
+                        document.getElementById('userName').textContent = userProfile.username;
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading user data:", error);
+                const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+                if (userProfile.username) {
+                    document.getElementById('userName').textContent = userProfile.username;
+                }
+            }
+        }
+        
+        async function cancelReservation(resId) {
+            if (!confirm('Are you sure you want to cancel this reservation?')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/reservation/cancel`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ res_id: resId })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Reservation cancelled successfully!');
+                    loadBookings();
+                } else {
+                    alert(data.message || 'Failed to cancel reservation');
+                }
+            } catch (error) {
+                console.error("Error cancelling reservation:", error);
+                alert('Failed to cancel reservation. Please try again.');
+            }
+        }
+        
+        async function checkoutReservation(resId) {
+            if (!confirm('Are you sure you want to checkout? This will end your parking session.')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/reservation/checkout`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ res_id: resId })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Checkout completed successfully!');
+                    loadBookings();
+                } else {
+                    alert(data.message || 'Failed to checkout');
+                }
+            } catch (error) {
+                console.error("Error checking out:", error);
+                alert('Failed to checkout. Please try again.');
+            }
+        }
+
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('en-US', options);
+            document.getElementById('currentDate').textContent = `Today is ${today}`;
+        }
+
+        async function loadBookings() {
+            const driverId = localStorage.getItem("driver_id");
+
+            if (!driverId) {
+                console.error("Driver not found!");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/reservation/driver/${driverId}`);
+                const data = await response.json();
+
+                if (!data.success) {
+                    console.error(data.message);
+                    return;
+                }
+
+                const bookings = data.reservations || [];
+
+                document.getElementById("totalBookings").textContent = bookings.length;
+                document.getElementById('activeBookings').textContent =
+                    bookings.filter(b => b.status === "confirmed" || b.status === "pending").length;
+                
+                const totalSpent = bookings.reduce((sum, b) => sum + (parseFloat(b.total_price) || 0), 0);
+                document.getElementById("totalSpent").textContent = totalSpent.toLocaleString();
+
+                displayBookings(bookings);
+                loadRecentLocations(bookings);
+            } catch (error) {
+                console.error("Error loading bookings:", error);
+            }
+        }
+        
+        function loadRecentLocations(bookings) {
+            const container = document.getElementById('recentLocations');
+            if (!container) return;
+            
+            const uniqueLocations = [...new Set(bookings.map(b => b.location).filter(Boolean))].slice(0, 2);
+            
+            if (uniqueLocations.length === 0) {
+                container.innerHTML = '<div class="empty-state" style="text-align: center; padding: 20px; color: #999;"><p>No recent locations</p></div>';
+                return;
+            }
+            
+            container.innerHTML = uniqueLocations.map(location => `
+                <div class="location-item">
+                    <div class="location-icon">🅿️</div>
+                    <div class="location-info">
+                        <h4>${location}</h4>
+                        <p>Recent parking location</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function isActiveBooking(booking) {
+            // Simple check - in real app, compare dates
+            return booking.paymentStatus === 'completed';
+        }
+
+        function displayBookings(bookings) {
+            const container = document.getElementById('bookingsList');
+            
+            if (!bookings || bookings.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>No bookings yet. Start by booking your first parking space!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = bookings.slice(0, 5).map(b => `
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div>
+                            <div class="booking-location">${b.location || "Parking Spot"}</div>
+                            <div class="booking-code">Reservation #${b.res_id}</div>
+                        </div>
+                        <span class="booking-status ${
+                            b.status === "confirmed" ? "status-active"
+                            : b.status === "pending" ? "status-upcoming"
+                            : b.status === "completed" ? "status-completed"
+                            : "status-cancelled"
+                        }">${b.status.toUpperCase()}</span>
+                    </div>
+
+                    <div class="booking-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Start</div>
+                            <div class="detail-value">${new Date(b.start_time).toLocaleString()}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">End</div>
+                            <div class="detail-value">${new Date(b.end_time).toLocaleString()}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Amount</div>
+                            <div class="detail-value">${parseFloat(b.total_price || 0).toLocaleString()} RWF</div>
+                        </div>
+                    </div>
+                    ${b.status === "confirmed" ? `<button onclick="checkoutReservation(${b.res_id})" class="checkout-btn">Checkout</button>` : ''}
+                    ${b.status === "pending" ? `<button onclick="cancelReservation(${b.res_id})" class="cancel-btn">Cancel</button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function filterBookings(filter) {
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter logic (simplified)
+            const bookings = JSON.parse(localStorage.getItem('parkingBookings') || '[]');
+            displayBookings(bookings);
+        }
+
+        function goToBooking() {
+            window.location.href = './booking_page.html';
+        }
+
+        function goToBookings() {
+            window.location.href = './my_bookings.html';
+        }
+
+        function goToProfile() {
+            window.location.href = './profile_page.html';
+        }
+
+        function goToHelp() {
+            window.location.href = './help_page.html';
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('driver_id');
+                localStorage.removeItem('userProfile');
+                sessionStorage.removeItem('userData');
+                window.location.href = './sign_up.html';
+            }
+        }
+    </script>
+</body>
+</html>

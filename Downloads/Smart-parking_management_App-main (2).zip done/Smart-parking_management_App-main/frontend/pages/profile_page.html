@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>My Profile - Smart Parking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f0f3 45%;
+            min-height: 100vh;
+        }
+
+        
+        /* NAVIGATION */
+        header {
+            background-color: rgb(26, 37, 163);;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .menu-icon span {
+            width: 100%;
+            height: 3px;
+            background-color: #1a1f71;
+            border-radius: 2px;
+        }
+        .notification_btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+
+        }
+        .notification_btn i {
+            margin-left: 8px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #1a1f71;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo-text h1 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+       
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #c0ef05;
+        }
+
+        .user-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #c6c7dd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .user-icon::before {
+            content: "👤";
+            font-size: 24px;
+            color: white;
+        }
+        .notification-container {
+            position: relative;
+            margin-right: 20px;
+            cursor: pointer;
+            font-size: 28px;
+        }
+
+        /* HEADER */
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 20px;
+            background: #17179c;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: #1a1f71;
+            padding: 12px 24px;
+    
+        }
+
+        .page-title {
+            color: #1a1f71;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        /* MAIN CONTENT */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+
+        /* LEFT SIDEBAR - PROFILE CARD */
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            height: fit-content;
+        }
+
+        .avatar-section {
+            margin-bottom: 25px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #1430ab 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin: 0 auto 15px;
+            color: white;
+            border: 5px solid #4462eb;
+        }
+
+        .avatar-upload {
+            display: inline-block;
+            color: #17179c;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 16px;
+            border: 2px solid #10268d;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .avatar-upload:hover {
+            background: #162a83;
+            color: white;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1f71;
+            margin-bottom: 8px;
+        }
+
+        .profile-email {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 20px 0;
+            border-top: 2px solid #f0f0f0;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #162a83;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .membership-badge {
+            background: #17179c 100%;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* RIGHT SECTION - FORMS */
+        .profile-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1f71;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .edit-btn {
+            padding: 8px 16px;
+            background: #122474;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .edit-btn:hover {
+            background: #2727da;
+        }
+
+        .edit-btn.cancel {
+            background: #e0e0e0;
+            color: #555;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #132887;
+        }
+
+        .form-group input:disabled,
+        .form-group select:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .info-display {
+            padding: 12px 14px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .save-btn {
+            padding: 14px 30px;
+            background: #10268d;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(32, 60, 183, 0.3);
+            margin-top: 10px;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(32, 60, 183, 0.4);
+        }
+
+        .save-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* VEHICLES SECTION */
+        .vehicles-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .vehicle-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .vehicle-item:hover {
+            border-color: #1b2e80;
+        }
+
+        .vehicle-icon {
+            width: 50px;
+            height: 50px;
+            background: #1430ab;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .vehicle-details {
+            flex: 1;
+        }
+
+        .vehicle-plate {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1f71;
+            margin-bottom: 4px;
+        }
+
+        .vehicle-type {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .vehicle-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn.delete {
+            background: #ffebee;
+            color: #f44336;
+        }
+
+        .icon-btn.delete:hover {
+            background: #f44336;
+            color: white;
+        }
+
+        .add-vehicle-btn {
+            width: 100%;
+            padding: 14px;
+            background: white;
+            border: 2px dashed #122474;
+            color: #162a83;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-vehicle-btn:hover {
+            background: #f8f9ff;
+        }
+
+        /* SECURITY SECTION */
+        .security-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .security-item:last-child {
+            border-bottom: none;
+        }
+
+        .security-info h4 {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .security-info p {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #ccc;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #27ae60;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            left: 26px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-card {
+                padding: 25px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+   <!-- NAVIGATION -->
+       <header>
+        <div class="logo-section"> 
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <div class="logo-text">
+                    <h1>SMART PARKING</h1>
+                    
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="./find_parking.html" class="active">Home</a></li>
+                <li><a href="./booking_page.html">Booking</a></li>
+                <li><a href="./User_dashboard.html">Dashboard</a></li>
+                <li><a href="./help_page.html">Help</a></li>
+                <a class="notification_btn" href="notification.html">Notification<i class="fas fa-bell"></i></a>
+            </ul>
+        </nav>
+        <div class="notification-container">
+       
+        <span class="notification-badge"></span>
+    </div>
+        <div class="user-icon"></div>
+    </header>
+        <!-- HEADER -->
+        <div class="page-header">
+            <h1 class="page-title">My Profile</h1>
+        </div>
+
+        <!-- CONTENT GRID -->
+        <div class="content-grid">
+            <!-- LEFT SIDEBAR -->
+            <div class="profile-card">
+                <div class="avatar-section">
+                    <div class="avatar" id="userAvatar">👤</div>
+                    <label class="avatar-upload">
+                        <input type="file" accept="image/*" style="display: none;" onchange="uploadAvatar(this)">
+                        Change Photo
+                    </label>
+                </div>
+
+                <h2 class="profile-name" id="displayName">John Doe</h2>
+                <p class="profile-email" id="displayEmail">john.doe@example.com</p>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalBookings">12</div>
+                        <div class="stat-label">Bookings</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalSpent">8,500</div>
+                        <div class="stat-label">RWF Spent</div>
+                    </div>
+                </div>
+
+                <div class="membership-badge">
+                     Premium Member
+                </div>
+            </div>
+
+            <!-- RIGHT SECTION -->
+            <div class="profile-sections">
+                <!-- PERSONAL INFORMATION -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h3 class="section-title">👤 Personal Information</h3>
+                        <button class="edit-btn" id="editPersonalBtn" onclick="toggleEdit('personal')">Edit</button>
+                    </div>
+
+                    <form class="form-grid" id="personalForm">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" id="firstName" value="John" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" id="lastName" value="Doe" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="email" value="john.doe@example.com" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="phone" value="+250 788 123 456" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <input type="date" id="dob" value="1990-05-15" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="gender" disabled>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Address</label>
+                            <input type="text" id="address" value="KG 123 St, Kigali, Rwanda" disabled>
+                        </div>
+                    </form>
+
+                    <button class="save-btn" id="savePersonalBtn" onclick="savePersonal()" style="display: none;">
+                        Save Changes
+                    </button>
+                </div>
+
+                <!-- MY VEHICLES -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h3 class="section-title">🚗 My Vehicles</h3>
+                    </div>
+
+                    <div class="vehicles-list" id="vehiclesList">
+                        <div class="vehicle-item">
+                            <div class="vehicle-icon">🚗</div>
+                            <div class="vehicle-details">
+                                <div class="vehicle-plate">RAD 123A</div>
+                                <div class="vehicle-type">Toyota Corolla • White</div>
+                            </div>
+                            <div class="vehicle-actions">
+                                <button class="icon-btn delete" onclick="deleteVehicle(0)">🗑️</button>
+                            </div>
+                        </div>
+                        <div class="vehicle-item">
+                            <div class="vehicle-icon">🚙</div>
+                            <div class="vehicle-details">
+                                <div class="vehicle-plate">RAD 456B</div>
+                                <div class="vehicle-type">Honda CRV • Black</div>
+                            </div>
+                            <div class="vehicle-actions">
+                                <button class="icon-btn delete" onclick="deleteVehicle(1)">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="add-vehicle-btn" onclick="addVehicle()">
+                        + Add New Vehicle
+                    </button>
+                </div>
+
+                <!-- SECURITY SETTINGS -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h3 class="section-title">Security & Privacy</h3>
+                    </div>
+
+                    <div class="security-item">
+                        <div class="security-info">
+                            <h4>Two-Factor Authentication</h4>
+                            <p>Add an extra layer of security to your account</p>
+                        </div>
+                        <div class="toggle-switch" id="toggle2FA" onclick="toggle2FA()"></div>
+                    </div>
+
+                    <div class="security-item">
+                        <div class="security-info">
+                            <h4>Email Notifications</h4>
+                            <p>Receive booking confirmations and updates</p>
+                        </div>
+                        <div class="toggle-switch active" id="toggleEmail" onclick="toggleEmail()"></div>
+                    </div>
+
+                    <div class="security-item">
+                        <div class="security-info">
+                            <h4>SMS Notifications</h4>
+                            <p>Get text messages for important updates</p>
+                        </div>
+                        <div class="toggle-switch active" id="toggleSMS" onclick="toggleSMS()"></div>
+                    </div>
+
+                    <div class="security-item">
+                        <div class="security-info">
+                            <h4>Change Password</h4>
+                            <p>Last changed 30 days ago</p>
+                        </div>
+                        <button class="edit-btn" onclick="changePassword()">Change</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkAuth("driver")) {
+                return;
+            }
+            loadUserProfile();
+            loadUserStats();
+        });
+
+        async function loadUserProfile() {
+            const driverId = localStorage.getItem("driver_id");
+            if (!driverId) {
+                const userData = JSON.parse(localStorage.getItem('userProfile') || '{}');
+                if (userData.username) {
+                    document.getElementById('firstName').value = userData.username.split(' ')[0] || '';
+                    document.getElementById('lastName').value = userData.username.split(' ').slice(1).join(' ') || '';
+                    document.getElementById('email').value = userData.email || '';
+                    document.getElementById('phone').value = userData.phone_number || '';
+                    document.getElementById('displayName').textContent = userData.username || 'User';
+                    document.getElementById('displayEmail').textContent = userData.email || '';
+                }
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/driver/profile/${driverId}`);
+                const data = await response.json();
+                
+                if (data.success && data.driver) {
+                    const driver = data.driver;
+                    const nameParts = (driver.username || '').split(' ');
+                    document.getElementById('firstName').value = nameParts[0] || '';
+                    document.getElementById('lastName').value = nameParts.slice(1).join(' ') || '';
+                    document.getElementById('email').value = driver.email || '';
+                    document.getElementById('phone').value = driver.phone_number || '';
+                    document.getElementById('displayName').textContent = driver.username || 'User';
+                    document.getElementById('displayEmail').textContent = driver.email || '';
+                    
+                    if (driver.vehicle_plate) {
+                        const vehiclesList = document.getElementById('vehiclesList');
+                        if (vehiclesList && vehiclesList.children.length === 0) {
+                            vehiclesList.innerHTML = `
+                                <div class="vehicle-item">
+                                    <div class="vehicle-icon">🚗</div>
+                                    <div class="vehicle-details">
+                                        <div class="vehicle-plate">${driver.vehicle_plate.toUpperCase()}</div>
+                                        <div class="vehicle-type">Vehicle</div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+                    
+                    localStorage.setItem('userProfile', JSON.stringify(driver));
+                }
+            } catch (error) {
+                console.error("Error loading profile:", error);
+                const userData = JSON.parse(localStorage.getItem('userProfile') || '{}');
+                if (userData.username) {
+                    document.getElementById('displayName').textContent = userData.username;
+                }
+            }
+        }
+
+        function loadUserStats() {
+            // Calculate stats from bookings
+            const bookings = JSON.parse(localStorage.getItem('parkingBookings') || '[]');
+            document.getElementById('totalBookings').textContent = bookings.length;
+            
+            const totalSpent = bookings.reduce((sum, booking) => sum + (booking.total || 0), 0);
+            document.getElementById('totalSpent').textContent = totalSpent.toLocaleString();
+        }
+
+        function toggleEdit(section) {
+            if (section === 'personal') {
+                const inputs = document.querySelectorAll('#personalForm input, #personalForm select');
+                const editBtn = document.getElementById('editPersonalBtn');
+                const saveBtn = document.getElementById('savePersonalBtn');
+                
+                const isDisabled = inputs[0].disabled;
+                
+                inputs.forEach(input => {
+                    input.disabled = !isDisabled;
+                });
+                
+                if (isDisabled) {
+                    editBtn.textContent = 'Cancel';
+                    editBtn.classList.add('cancel');
+                    saveBtn.style.display = 'block';
+                } else {
+                    editBtn.textContent = 'Edit';
+                    editBtn.classList.remove('cancel');
+                    saveBtn.style.display = 'none';
+                    loadUserProfile(); // Reset values
+                }
+            }
+        }
+
+        async function savePersonal() {
+            const driverId = localStorage.getItem("driver_id");
+            if (!driverId) {
+                alert('You must be logged in to update your profile');
+                return;
+            }
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const username = `${firstName} ${lastName}`.trim();
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            
+            if (!username || !email) {
+                alert('Username and email are required');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/driver/profile/${driverId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: username,
+                        email: email,
+                        phone_number: phone
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('displayName').textContent = username;
+                    document.getElementById('displayEmail').textContent = email;
+                    localStorage.setItem('userProfile', JSON.stringify(data.driver));
+                    alert('✓ Profile updated successfully!');
+                    toggleEdit('personal');
+                } else {
+                    alert(data.message || 'Failed to update profile');
+                }
+            } catch (error) {
+                console.error("Error updating profile:", error);
+                alert('Failed to update profile. Please try again.');
+            }
+        }
+
+        function addVehicle() {
+            const plate = prompt('Enter vehicle plate number:');
+            if (!plate) return;
+            
+            const type = prompt('Enter vehicle type (e.g., Toyota Corolla):');
+            const color = prompt('Enter vehicle color:');
+            
+            if (plate && type) {
+                const vehiclesList = document.getElementById('vehiclesList');
+                const vehicleCount = vehiclesList.children.length;
+                
+                const vehicleHTML = `
+                    <div class="vehicle-item">
+                        <div class="vehicle-icon">🚗</div>
+                        <div class="vehicle-details">
+                            <div class="vehicle-plate">${plate.toUpperCase()}</div>
+                            <div class="vehicle-type">${type}${color ? ' • ' + color : ''}</div>
+                        </div>
+                        <div class="vehicle-actions">
+                            <button class="icon-btn delete" onclick="deleteVehicle(${vehicleCount})">🗑️</button>
+                        </div>
+                    </div>
+                `;
+                
+                vehiclesList.insertAdjacentHTML('beforeend', vehicleHTML);
+                alert('✓ Vehicle added successfully!');
+            }
+        }
+
+        function deleteVehicle(index) {
+            if (confirm('Are you sure you want to remove this vehicle?')) {
+                const vehiclesList = document.getElementById('vehiclesList');
+                vehiclesList.children[index].remove();
+                alert('✓ Vehicle removed successfully!');
+            }
+        }
+
+        function toggle2FA() {
+            const toggle = document.getElementById('toggle2FA');
+            toggle.classList.toggle('active');
+            
+            if (toggle.classList.contains('active')) {
+                alert('✓ Two-Factor Authentication enabled!');
+            } else {
+                alert('Two-Factor Authentication disabled.');
+            }
+        }
+
+        function toggleEmail() {
+            const toggle = document.getElementById('toggleEmail');
+            toggle.classList.toggle('active');
+        }
+
+        function toggleSMS() {
+            const toggle = document.getElementById('toggleSMS');
+            toggle.classList.toggle('active');
+        }
+
+        function changePassword() {
+            const current = prompt('Enter current password:');
+            if (!current) return;
+            
+            const newPass = prompt('Enter new password:');
+            if (!newPass) return;
+            
+            const confirm = prompt('Confirm new password:');
+            
+            if (newPass === confirm) {
+                alert('✓ Password changed successfully!');
+            } else {
+                alert('❌ Passwords do not match!');
+            }
+        }
+
+        function uploadAvatar(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('userAvatar').style.backgroundImage = `url(${e.target.result})`;
+                    document.getElementById('userAvatar').style.backgroundSize = 'cover';
+                    document.getElementById('userAvatar').textContent = '';
+                    alert('✓ Profile photo updated!');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function goToProfile() {
+            window.location.href = './profile_page.html';
+        }
+
+        function goToDashboard() {
+            window.location.href = './User_dashboard.html';
+        }
+    </script>
+</body>
+</html>

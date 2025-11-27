@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Parking - Park smart, Save time</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background-color: #f8f9fb;
+      }
+
+      header {
+        background-color: rgb(26, 37, 163);
+        padding: 20px 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .menu-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+        cursor: pointer;
+      }
+
+      .menu-icon span {
+        width: 100%;
+        height: 3px;
+        background-color: #1a1f71;
+        border-radius: 2px;
+      }
+      .notification_btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .notification_btn i {
+        margin-left: 8px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .logo-icon {
+        width: 50px;
+        height: 50px;
+        background-color: #1a1f71;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .logo-text h1 {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 40px;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+        transition: color 0.3s;
+      }
+
+      nav a:hover {
+        color: #c0ef05;
+      }
+
+      .user-icon {
+        width: 50px;
+        height: 50px;
+        background-color: #c6c7dd;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .user-icon::before {
+        content: "👤";
+        font-size: 24px;
+        color: white;
+      }
+      .notification-container {
+        position: relative;
+        margin-right: 20px;
+        cursor: pointer;
+        font-size: 28px;
+      }
+
+      main {
+        max-width: 1200px;
+        margin: 60px auto;
+        padding: 0 40px;
+      }
+
+      .hero-title {
+        text-align: center;
+        color: #1a1f71;
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 50px;
+        line-height: 1.3;
+      }
+
+      .search-section {
+        background: rgba(217, 219, 234, 0.242);
+        box-shadow: rgb(26, 37, 163) 0px 0px 5px;
+        border-radius: 20px;
+        padding: 50px;
+        margin-bottom: 60px;
+      }
+
+      .search-bar {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .search-input {
+        flex: 1;
+        padding: 18px 25px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        outline: none;
+      }
+
+      .search-input::placeholder {
+        color: #999;
+      }
+
+      .search-btn {
+        padding: 18px 45px;
+        background-color: #1a1f71;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .search-btn:hover {
+        background-color: #2d3382;
+      }
+
+      .date-time-inputs {
+        display: flex;
+        gap: 20px;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .input-group label {
+        color: #1a1f71;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .input-group input {
+        padding: 15px 20px;
+        border: none;
+        border-radius: 12px;
+        font-size: 15px;
+        width: 200px;
+        outline: none;
+      }
+
+      .popular-section h2 {
+        color: #1a1f71;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 25px;
+      }
+
+      .locations-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+      }
+
+      .location-card {
+        background: rgba(218, 219, 232, 0.242);
+        box-shadow: rgb(26, 37, 163) 0px 0px 5px;
+        border-radius: 16px;
+        padding: 20px;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .location-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .location-card {
+        cursor: pointer;
+      }
+
+      .location-image {
+        width: 100%;
+        height: 180px;
+        background-color: #e8ebf3;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .location-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image-nav {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 6px;
+        z-index: 10;
+      }
+
+      .image-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .image-dot.active {
+        background-color: white;
+      }
+
+      .image-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(255, 255, 255, 0.8);
+        border: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        transition: background-color 0.3s;
+      }
+
+      .image-arrow:hover {
+        background-color: white;
+      }
+
+      .image-arrow.prev {
+        left: 10px;
+      }
+
+      .image-arrow.next {
+        right: 10px;
+      }
+
+      .location-dots {
+        position: absolute;
+        top: 195px;
+        right: 30px;
+        color: #a0a4c1;
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+
+      .location-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+      }
+
+      .location-name {
+        color: #1a1f71;
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .location-price {
+        text-align: right;
+      }
+
+      .location-price .from {
+        color: #666;
+        font-size: 12px;
+      }
+
+      .location-price .amount {
+        color: #1a1f71;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .rating {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+
+      .stars {
+        color: #1a1f71;
+        font-size: 16px;
+        letter-spacing: 2px;
+      }
+
+      .reviews {
+        color: #666;
+        font-size: 13px;
+      }
+
+      .book-now-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #1a1f71;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .book-now-btn:hover {
+        background-color: #2d3382;
+      }
+
+      @media (max-width: 1024px) {
+        .locations-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        header {
+          padding: 20px 30px;
+        }
+
+        nav ul {
+          gap: 20px;
+        }
+
+        .hero-title {
+          font-size: 32px;
+        }
+
+        .search-section {
+          padding: 30px;
+        }
+
+        .search-bar {
+          flex-direction: column;
+        }
+
+        .date-time-inputs {
+          flex-direction: column;
+        }
+
+        .input-group input {
+          width: 100%;
+        }
+
+        .locations-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo-section">
+        <div class="logo">
+          <div class="logo-icon">P</div>
+          <div class="logo-text">
+            <h1>SMART PARKING</h1>
+          </div>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="./find_parking.html" class="active">Home</a></li>
+          <li><a href="./booking_page.html">Booking</a></li>
+          <li><a href="./User_dashboard.html">Dashboard</a></li>
+          <li><a href="./help_page.html">Help</a></li>
+          <a class="notification_btn" href="notification.html"
+            >Notification<i class="fas fa-bell"></i
+          ></a>
+        </ul>
+      </nav>
+      <div class="notification-container">
+        <span class="notification-badge"></span>
+      </div>
+      <a href="./profile_page.html">
+        <div class="user-icon"></div>
+      </a>
+    </header>
+
+    <main>
+      <h1 class="hero-title">FIND AND BOOK YOUR<br />PARKING SPACE WITH US</h1>
+
+      <div class="search-section">
+        <div class="search-bar">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Enter location, Address, or parking name"
+          />
+          <button class="search-btn">Find parking</button>
+        </div>
+        <div class="date-time-inputs">
+          <div class="input-group">
+            <label>Date</label>
+            <input type="date" id="date-input" />
+          </div>
+          <div class="input-group">
+            <label>Time</label>
+            <input type="time" id="time-input" />
+          </div>
+        </div>
+      </div>
+
+      <div class="popular-section">
+        <h2>Available Parking Spots :</h2>
+        <div class="locations-grid" id="locationsGrid">
+          <div
+            class="loading-message"
+            style="
+              grid-column: 1 / -1;
+              text-align: center;
+              padding: 40px;
+              color: #999;
+            "
+          >
+            Loading parking spots...
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+      let availableParkingSpots = [];
+
+      async function loadParkingSpots() {
+        try {
+          const response = await fetch(`${API_BASE_URL}/parking/available`);
+          const data = await response.json();
+
+          if (data.success && data.parking_spots) {
+            availableParkingSpots = data.parking_spots;
+            displayParkingSpots(data.parking_spots);
+          }
+        } catch (error) {
+          console.error("Error loading parking spots:", error);
+        }
+      }
+
+      function displayParkingSpots(spots, filteredSpots = null) {
+        const grid = document.getElementById("locationsGrid");
+        if (!grid) return;
+
+        const spotsToDisplay = filteredSpots || spots;
+
+        if (spotsToDisplay.length === 0) {
+          grid.innerHTML = `
+            <div class="loading-message" style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #999;">
+              No parking spots found. Try adjusting your search.
+            </div>
+          `;
+          return;
+        }
+
+        const defaultImages = [
+          "../assets/images/Airport parking1.avif",
+          "../assets/images/street_parking3.jpg",
+          "../assets/images/kimironko-market.jpg",
+          "../assets/images/chic image1.jpg",
+        ];
+
+        grid.innerHTML = spotsToDisplay
+          .map((spot, index) => {
+            const imageIndex = index % defaultImages.length;
+            const locationKey = spot.location
+              .toLowerCase()
+              .replace(/\s+/g, "-");
+            return `
+                <div class="location-card" data-spot-id="${
+                  spot.spot_id
+                }" onclick="bookSpot(${spot.spot_id})">
+                    <div class="location-image">
+                        <img src="${defaultImages[imageIndex]}" alt="${
+              spot.location
+            }">
+                    </div>
+                    <div class="location-dots">...</div>
+                    <div class="location-info">
+                        <div class="location-name">${spot.location}</div>
+                        <div class="location-price">
+                            <div class="from">${parseFloat(
+                              spot.price_per_hour
+                            ).toLocaleString()} RWF/hr</div>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <div class="stars">★ ★ ★ ★</div>
+                        <div class="reviews">${
+                          spot.spot_number
+                        } spots available</div>
+                    </div>
+                    <button class="book-now-btn" onclick="event.stopPropagation(); bookSpot(${
+                      spot.spot_id
+                    })">Book Now</button>
+                </div>
+            `;
+          })
+          .join("");
+      }
+
+      function bookSpot(spotId) {
+        const dateInput = document.getElementById("date-input");
+        const timeInput = document.getElementById("time-input");
+
+        localStorage.setItem("selectedSpotId", spotId);
+
+        if (dateInput && dateInput.value) {
+          localStorage.setItem("searchDate", dateInput.value);
+        }
+        if (timeInput && timeInput.value) {
+          localStorage.setItem("searchTime", timeInput.value);
+        }
+
+        window.location.href = "./booking_page.html?spot_id=" + spotId;
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        loadParkingSpots();
+        updateNotificationBadge();
+
+        const savedDate = localStorage.getItem("searchDate");
+        const savedTime = localStorage.getItem("searchTime");
+        if (savedDate && dateInput) {
+          dateInput.value = savedDate;
+        }
+        if (savedTime && timeInput) {
+          timeInput.value = savedTime;
+        }
+      });
+
+      // Set default date to today
+      const dateInput = document.getElementById("date-input");
+      const today = new Date().toISOString().split("T")[0];
+      dateInput.value = today;
+
+      // Set default time to current time
+      const timeInput = document.getElementById("time-input");
+      const now = new Date();
+      const currentTime = now.toTimeString().slice(0, 5);
+      timeInput.value = currentTime;
+
+      function filterParkingSpots() {
+        const searchInput = document.querySelector(".search-input");
+        const searchTerm = searchInput.value.toLowerCase().trim();
+
+        if (!searchTerm) {
+          displayParkingSpots(availableParkingSpots);
+          return;
+        }
+
+        const filtered = availableParkingSpots.filter((spot) => {
+          const locationMatch = spot.location
+            .toLowerCase()
+            .includes(searchTerm);
+          return locationMatch;
+        });
+
+        displayParkingSpots(availableParkingSpots, filtered);
+      }
+
+      const searchBtn = document.querySelector(".search-btn");
+      const searchInput = document.querySelector(".search-input");
+
+      searchBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        filterParkingSpots();
+      });
+
+      searchInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          filterParkingSpots();
+        }
+      });
+
+      searchInput.addEventListener("input", function () {
+        if (this.value.trim() === "") {
+          displayParkingSpots(availableParkingSpots);
+        }
+      });
+
+      // Menu icon click
+      document
+        .querySelector(".menu-icon")
+        .addEventListener("click", function () {
+          alert("Mobile menu would open here");
+        });
+    </script>
+  </body>
+</html>

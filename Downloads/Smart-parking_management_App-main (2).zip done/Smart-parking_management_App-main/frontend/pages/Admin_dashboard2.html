@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Smart Parking</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: #f5f7fa;
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        width: 260px;
+        background: linear-gradient(180deg, #1a1f71 0%, #1a1f71 100%);
+        color: white;
+        padding: 30px 0;
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 25px 30px;
+        border-bottom: 1px solid #1a1f71;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .admin-badge {
+        font-size: 12px;
+        opacity: 0.8;
+      }
+
+      .sidebar-menu {
+        padding: 20px 0;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 25px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .menu-item:hover,
+      .menu-item.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      .menu-icon {
+        font-size: 20px;
+        width: 25px;
+      }
+
+      .menu-text {
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .menu-section {
+        padding: 20px 25px 10px;
+        font-size: 11px;
+        text-transform: uppercase;
+        opacity: 0.6;
+        font-weight: 700;
+      }
+
+      /* MAIN CONTENT */
+      .main-content {
+        margin-left: 260px;
+        flex: 1;
+        padding: 30px;
+      }
+
+      /* TOP BAR */
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .page-title h1 {
+        font-size: 28px;
+        color: #1a1f71;
+        margin-bottom: 5px;
+      }
+
+      .page-title p {
+        color: #1a1f71;
+        font-size: 14px;
+      }
+
+      .top-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .notification-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        background: white;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .notification-btn:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .notification-badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        background: #f44336;
+        border-radius: 50%;
+      }
+
+      .admin-avatar {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: white;
+        cursor: pointer;
+      }
+
+      /* STATS GRID */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 15px;
+      }
+
+      .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+      }
+
+      .stat-icon.blue {
+        background: #e3f2fd;
+      }
+      .stat-icon.green {
+        background: #e8f5e9;
+      }
+      .stat-icon.orange {
+        background: #fff3e0;
+      }
+      .stat-icon.purple {
+        background: #f3e5f5;
+      }
+
+      .stat-trend {
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-weight: 600;
+      }
+
+      .trend-up {
+        background: #e8f5e9;
+        color: #27ae60;
+      }
+
+      .trend-down {
+        background: #ffebee;
+        color: #f44336;
+      }
+
+      .stat-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #1a1f71;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        color: #888;
+        font-size: 14px;
+      }
+
+      /* CONTENT SECTIONS */
+      .content-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+        margin-bottom: 25px;
+      }
+
+      .section-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .section-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1a1f71;
+      }
+
+      .add-btn {
+        padding: 8px 16px;
+        background: #1a1f71;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .add-btn:hover {
+        background: #25379a;
+      }
+
+      /* PARKING SPACES TABLE */
+      .spaces-table {
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background: #f8f9fa;
+      }
+
+      th {
+        text-align: left;
+        padding: 12px;
+        font-size: 13px;
+        color: #666;
+        font-weight: 600;
+        border-bottom: 2px solid #e0e0e0;
+      }
+
+      td {
+        padding: 15px 12px;
+        font-size: 14px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      tr:hover {
+        background: #f8f9fa;
+      }
+
+      .space-name {
+        font-weight: 600;
+        color: #1a1f71;
+      }
+
+      .space-location {
+        font-size: 12px;
+        color: #888;
+        margin-top: 3px;
+      }
+
+      .status-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+      }
+
+      .status-available {
+        background: #e8f5e9;
+        color: #27ae60;
+      }
+
+      .status-occupied {
+        background: #ffebee;
+        color: #f44336;
+      }
+
+      .status-maintenance {
+        background: #fff3e0;
+        color: #ff9800;
+      }
+
+      .action-btns {
+        display: flex;
+        gap: 8px;
+      }
+
+      .icon-btn {
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s;
+      }
+
+      .edit-btn {
+        background: #e3f2fd;
+        color: #1a1f71;
+      }
+
+      .delete-btn {
+        background: #ffebee;
+        color: #f44336;
+      }
+
+      .icon-btn:hover {
+        transform: scale(1.1);
+      }
+
+      /* RECENT BOOKINGS */
+      .booking-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid #f0f0f0;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        transition: all 0.3s;
+      }
+
+      .booking-item:hover {
+        background: #f8f9fa;
+      }
+
+      .booking-info {
+        flex: 1;
+      }
+
+      .booking-name {
+        font-weight: 600;
+        color: #1a1f71;
+        margin-bottom: 4px;
+      }
+
+      .booking-details-text {
+        font-size: 12px;
+        color: #888;
+      }
+
+      .booking-amount {
+        font-weight: 700;
+        color: #182a7f;
+        font-size: 16px;
+      }
+
+      /* MODAL */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal.show {
+        display: flex;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .modal-header {
+        margin-bottom: 25px;
+      }
+
+      .modal-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1a1f71;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s;
+        font-family: inherit;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #1a1f71;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+      }
+
+      .btn {
+        flex: 1;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #1a1f71 0%, #182a7f 100%);
+        color: white;
+      }
+
+      .btn-secondary {
+        background: #e0e0e0;
+        color: #555;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 1024px) {
+        .content-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          z-index: 100;
+        }
+
+        .main-content {
+          margin-left: 0;
+          padding: 20px 15px;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">🅿️ Smart Parking</div>
+        <div class="admin-badge">Admin Panel</div>
+      </div>
+
+      <div class="sidebar-menu">
+        <div class="menu-section">Main</div>
+        <a href="#" class="menu-item active" onclick="showSection('overview')">
+          <span class="menu-icon">📊</span>
+          <span class="menu-text">Overview</span>
+        </a>
+        <a href="#" class="menu-item" onclick="showSection('spaces')">
+          <span class="menu-icon">🅿️</span>
+          <span class="menu-text" onclick="window.location.href='find_parking.html'">Parking Spaces</span>
+        </a>
+        <a href="#" class="menu-item" onclick="showSection('bookings')">
+          <span class="menu-icon">📅</span>
+          <span onclick=window.location.href='booking_page.html' class="menu-text">Bookings</span>
+        </a>
+        <a href="#" class="menu-item" onclick="showSection('revenue')">
+          <span class="menu-icon">💰</span>
+          <span class="menu-text">Revenue</span>
+        </a>
+
+        <div class="menu-section">Management</div>
+        <a href="#" class="menu-item" onclick="showSection('analytics')">
+          <span class="menu-icon">📈</span>
+          <span class="menu-text">Analytics</span>
+        </a>
+        <a href="#" class="menu-item" onclick="showSection('customers')">
+          <span class="menu-icon">👥</span>
+          <span class="menu-text">Customers</span>
+        </a>
+        <a href="#" class="menu-item" onclick="showSection('settings')">
+          <span class="menu-icon">⚙️</span>
+          <span class="menu-text">Settings</span>
+        </a>
+
+        <div class="menu-section">Account</div>
+        <a href="#" class="menu-item" onclick="goToUserDashboard()">
+          <span class="menu-icon">🏠</span>
+          <span class="menu-text">User Dashboard</span>
+        </a>
+        <a href="#" class="menu-item" onclick="logout()">
+          <span class="menu-icon">🚪</span>
+          <span class="menu-text">Logout</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <!-- TOP BAR -->
+      <div class="top-bar">
+        <div class="page-title">
+          <h1>Dashboard Overview</h1>
+          <p>Manage your parking spaces and bookings</p>
+        </div>
+        <div class="top-actions">
+          <button class="notification-btn">
+            🔔
+            <span class="notification-badge"></span>
+          </button>
+          <div class="admin-avatar">👤</div>
+        </div>
+      </div>
+
+      <!-- STATS GRID -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon blue">🅿️</div>
+            <span class="stat-trend trend-up">↑ 12%</span>
+          </div>
+          <div class="stat-value" id="totalSpaces">24</div>
+          <div class="stat-label">Total Parking Spaces</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon green">📅</div>
+            <span class="stat-trend trend-up">↑ 8%</span>
+          </div>
+          <div class="stat-value" id="todayBookings">18</div>
+          <div class="stat-label">Today's Bookings</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon orange">💰</div>
+            <span class="stat-trend trend-up">↑ 15%</span>
+          </div>
+          <div class="stat-value" id="todayRevenue">45,200</div>
+          <div class="stat-label">Today's Revenue (RWF)</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon purple">⭐</div>
+            <span class="stat-trend trend-up">↑ 5%</span>
+          </div>
+          <div class="stat-value">4.8</div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+
+      <!-- CONTENT ROW -->
+      <div class="content-row">
+        <!-- PARKING SPACES -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Parking Spaces</h2>
+            <button class="add-btn" onclick="openAddSpaceModal()">
+              + Add Space
+            </button>
+          </div>
+
+          <div class="spaces-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Space</th>
+                  <th>Status</th>
+                  <th>Price/Hour</th>
+                  <th>Occupancy</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="spacesTableBody">
+                <tr>
+                  <td>
+                    <div class="space-name">Airport Parking A1</div>
+                    <div class="space-location">
+                      Kigali International Airport
+                    </div>
+                  </td>
+                  <td>
+                    <span class="status-badge status-available">Available</span>
+                  </td>
+                  <td>150 RWF</td>
+                  <td>85%</td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="icon-btn edit-btn" onclick="editSpace(0)">
+                        ✏️
+                      </button>
+                      <button
+                        class="icon-btn delete-btn"
+                        onclick="deleteSpace(0)"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="space-name">City Mall Parking B2</div>
+                    <div class="space-location">Downtown Kigali</div>
+                  </td>
+                  <td>
+                    <span class="status-badge status-occupied">Occupied</span>
+                  </td>
+                  <td>200 RWF</td>
+                  <td>92%</td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="icon-btn edit-btn" onclick="editSpace(1)">
+                        ✏️
+                      </button>
+                      <button
+                        class="icon-btn delete-btn"
+                        onclick="deleteSpace(1)"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="space-name">Hospital Parking C3</div>
+                    <div class="space-location">Kigali Central Hospital</div>
+                  </td>
+                  <td>
+                    <span class="status-badge status-maintenance"
+                      >Maintenance</span
+                    >
+                  </td>
+                  <td>120 RWF</td>
+                  <td>0%</td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="icon-btn edit-btn" onclick="editSpace(2)">
+                        ✏️
+                      </button>
+                      <button
+                        class="icon-btn delete-btn"
+                        onclick="deleteSpace(2)"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- RECENT BOOKINGS -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Recent Bookings</h2>
+          </div>
+
+          <div id="recentBookings">
+            <div class="booking-item">
+              <div class="booking-info">
+                <div class="booking-name">John Doe</div>
+                <div class="booking-details-text">Airport A1 • 2 hours</div>
+              </div>
+              <div class="booking-amount">300 RWF</div>
+            </div>
+            <div class="booking-item">
+              <div class="booking-info">
+                <div class="booking-name">Jane Smith</div>
+                <div class="booking-details-text">City Mall B2 • 4 hours</div>
+              </div>
+              <div class="booking-amount">800 RWF</div>
+            </div>
+            <div class="booking-item">
+              <div class="booking-info">
+                <div class="booking-name">Mike Johnson</div>
+                <div class="booking-details-text">Airport A1 • 3 hours</div>
+              </div>
+              <div class="booking-amount">450 RWF</div>
+            </div>
+            <div class="booking-item">
+              <div class="booking-info">
+                <div class="booking-name">Sarah Williams</div>
+                <div class="booking-details-text">City Mall B2 • 5 hours</div>
+              </div>
+              <div class="booking-amount">1,000 RWF</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD SPACE MODAL -->
+    <div class="modal" id="addSpaceModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Add New Parking Space</h2>
+        </div>
+
+        <form id="addSpaceForm">
+          <div class="form-group">
+            <label>Space Name *</label>
+            <input
+              type="text"
+              placeholder="e.g., Airport Parking A1"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Location *</label>
+            <input
+              type="text"
+              placeholder="e.g., Kigali International Airport"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Full Address *</label>
+            <textarea
+              rows="3"
+              placeholder="Enter complete address"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Total Spots *</label>
+              <input type="number" min="1" placeholder="e.g., 50" required />
+            </div>
+            <div class="form-group">
+              <label>Price per Hour (RWF) *</label>
+              <input type="number" min="1" placeholder="e.g., 150" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Status *</label>
+              <select required>
+                <option value="available">Available</option>
+                <option value="maintenance">Maintenance</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Vehicle Type *</label>
+              <select required>
+                <option value="all">All Vehicles</option>
+                <option value="sedan">Sedans Only</option>
+                <option value="suv">SUVs Only</option>
+                <option value="motorcycle">Motorcycles Only</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Amenities</label>
+            <input
+              type="text"
+              placeholder="e.g., 24/7 Security, CCTV, Covered"
+            />
+          </div>
+
+          <div class="modal-actions">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="closeAddSpaceModal()"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              onclick="addSpace(event)"
+            >
+              Add Space
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (!checkAuth("operator")) {
+          return;
+        }
+        loadAdminStats();
+        loadParkingSpaces();
+      });
+
+      async function loadParkingSpaces() {
+        const operatorId = localStorage.getItem("operator_id");
+        const userProfile = JSON.parse(
+          localStorage.getItem("userProfile") || "{}"
+        );
+        const opId = operatorId || userProfile.operator_id;
+
+        if (!opId) return;
+
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/parking/operator/${opId}`
+          );
+          const data = await response.json();
+
+          const tbody = document.getElementById("spacesTableBody");
+          if (!tbody) return;
+
+          if (
+            data.success &&
+            data.parking_spots &&
+            data.parking_spots.length > 0
+          ) {
+            tbody.innerHTML = data.parking_spots
+              .map((spot, index) => {
+                const totalCapacity = 24;
+                const used = totalCapacity - spot.spot_number;
+                const occupancy =
+                  totalCapacity > 0
+                    ? Math.round((used / totalCapacity) * 100)
+                    : 0;
+                return `
+                            <tr>
+                                <td>
+                                    <div class="space-name">${
+                                      spot.location
+                                    }</div>
+                                    <div class="space-location">${
+                                      spot.location
+                                    }</div>
+                                </td>
+                                <td><span class="status-badge ${
+                                  spot.is_available
+                                    ? "status-available"
+                                    : "status-occupied"
+                                }">${
+                  spot.is_available ? "Available" : "Occupied"
+                }</span></td>
+                                <td>${parseFloat(
+                                  spot.price_per_hour
+                                ).toLocaleString()} RWF</td>
+                                <td>${occupancy}%</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="icon-btn edit-btn" onclick="editSpace(${
+                                          spot.spot_id
+                                        })">✏️</button>
+                                        <button class="icon-btn delete-btn" onclick="deleteSpace(${
+                                          spot.spot_id
+                                        })">🗑️</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+              })
+              .join("");
+          } else {
+            tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 40px; color: #999;">
+                                No parking spaces found. Click "+ Add Space" to create one.
+                            </td>
+                        </tr>
+                    `;
+          }
+        } catch (error) {
+          console.error("Error loading parking spaces:", error);
+          const tbody = document.getElementById("spacesTableBody");
+          if (tbody) {
+            tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 40px; color: #e74c3c;">
+                                Error loading parking spaces. Please refresh the page.
+                            </td>
+                        </tr>
+                    `;
+          }
+        }
+      }
+
+      async function loadAdminStats() {
+        const operatorId = localStorage.getItem("operator_id");
+        const userProfile = JSON.parse(
+          localStorage.getItem("userProfile") || "{}"
+        );
+        const opId = operatorId || userProfile.operator_id;
+
+        if (!opId) return;
+
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/parking/operator/${opId}/stats`
+          );
+          const data = await response.json();
+
+          if (data.success && data.stats) {
+            document.getElementById("totalSpaces").textContent =
+              data.stats.total_spaces || 0;
+            document.getElementById("todayBookings").textContent =
+              data.stats.today_bookings || 0;
+            document.getElementById("todayRevenue").textContent = (
+              data.stats.today_revenue || 0
+            ).toLocaleString();
+          }
+        } catch (error) {
+          console.error("Error loading admin stats:", error);
+        }
+      }
+      function showSection(section) {
+        alert(`Navigating to ${section} section...`);
+        //  Load different content
+      }
+
+      function openAddSpaceModal() {
+        document.getElementById("addSpaceModal").classList.add("show");
+      }
+
+      function closeAddSpaceModal() {
+        document.getElementById("addSpaceModal").classList.remove("show");
+      }
+
+      async function addSpace(event) {
+        event.preventDefault();
+
+        const operatorId = localStorage.getItem("operator_id");
+        const userProfile = JSON.parse(
+          localStorage.getItem("userProfile") || "{}"
+        );
+        const opId = operatorId || userProfile.operator_id;
+
+        if (!opId) {
+          alert("Operator ID not found. Please login again.");
+          return;
+        }
+
+        const form = document.getElementById("addSpaceForm");
+        const inputs = form.querySelectorAll(
+          'input[type="text"], input[type="number"], textarea'
+        );
+        const location = inputs[0]?.value || "";
+        const totalSpots = parseInt(inputs[3]?.value || 0);
+        const pricePerHour = parseFloat(inputs[4]?.value || 0);
+
+        if (!location || !totalSpots || !pricePerHour) {
+          alert("Please fill in all required fields");
+          return;
+        }
+
+        try {
+          const response = await fetch(`${API_BASE_URL}/parking/add`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              operator_id: parseInt(opId),
+              location: location,
+              price_per_hour: pricePerHour,
+              total_spots: totalSpots,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            alert("✓ New parking space added successfully!");
+            closeAddSpaceModal();
+            form.reset();
+            loadParkingSpaces();
+            loadAdminStats();
+          } else {
+            alert(data.message || "Failed to add parking space");
+          }
+        } catch (error) {
+          console.error("Error adding parking space:", error);
+          alert("Failed to add parking space. Please try again.");
+        }
+      }
+
+      function editSpace(index) {
+        alert(`Editing parking space ${index + 1}...`);
+        //  Open modal with pre-filled data
+      }
+
+      function deleteSpace(index) {
+        if (confirm("Are you sure you want to delete this parking space?")) {
+          alert("✓ Parking space deleted successfully!");
+          // Delete from database and refresh table
+        }
+      }
+
+      function goToUserDashboard() {
+        alert("Switching to user dashboard...");
+        // window.location.href = 'dashboard.html';
+      }
+
+      function logout() {
+        if (confirm("Are you sure you want to logout?")) {
+          localStorage.removeItem("driver_id");
+          localStorage.removeItem("userProfile");
+          sessionStorage.removeItem("userData");
+          window.location.href = "./sign_up.html";
+        }
+      }
+
+      // Close modal when clicking outside
+      window.onclick = function (event) {
+        const modal = document.getElementById("addSpaceModal");
+        if (event.target === modal) {
+          closeAddSpaceModal();
+        }
+      };
+    </script>
+  </body>
+</html>
