@@ -1,0 +1,33 @@
+{
+  "common": {
+    "success": "Byagenze neza",
+    "error": "Habayeho ikibazo",
+    "notFound": "Ntabwo ikoranabuhanga ribonetse",
+    "unauthorized": "Ntabwo wemewe",
+    "forbidden": "Nta uburenganzira bwo gukora ibi"
+  },
+  "auth": {
+    "registrationSuccess": "Iyandikishe ryagenze neza. Murakaza neza kuri AgriSmart!",
+    "advisorPendingApproval": "Iyandikishe ryagenze neza. Konti yawe irindirira kwemezwa na admin.",
+    "loginSuccess": "Kwinjira byagenze neza",
+    "invalidCredentials": "Imeyili cyangwa ijambo ry'ibanga ntaho bihuriye",
+    "emailInUse": "Imeyili iracyifashishwa",
+    "accountDeactivated": "Konti yawe ihagaritswe"
+  },
+  "admin": {
+    "advisorApproved": "Umujyanama yemejwe kandi yamenyeshejwe imeyili",
+    "userDeactivated": "Umukoresha yahagaritswe"
+  },
+  "farmer": {
+    "profileUpdated": "Umwirondoro w'ubuhinzi wahinduwe neza",
+    "noAdvisorAssigned": "Nta mujyanama wagenwe ubu"
+  },
+  "advisor": {
+    "farmerAssigned": "Umuhinzi yasobanuwe neza",
+    "profileUpdated": "Umwirondoro w'umujyanama wahinduwe"
+  },
+  "groups": {
+    "joined": "Winjiye mugatsiko neza",
+    "left": "Wavuye mugatsiko neza"
+  }
+}

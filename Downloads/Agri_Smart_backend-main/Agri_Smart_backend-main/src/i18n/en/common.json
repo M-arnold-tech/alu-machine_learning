@@ -1,0 +1,33 @@
+{
+  "common": {
+    "success": "Success",
+    "error": "An error occurred",
+    "notFound": "Resource not found",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Access denied"
+  },
+  "auth": {
+    "registrationSuccess": "Registration successful. Welcome to AgriSmart!",
+    "advisorPendingApproval": "Registration successful. Your account is pending admin approval.",
+    "loginSuccess": "Login successful",
+    "invalidCredentials": "Invalid email or password",
+    "emailInUse": "Email already in use",
+    "accountDeactivated": "Your account has been deactivated"
+  },
+  "admin": {
+    "advisorApproved": "Advisor has been approved and notified via email",
+    "userDeactivated": "User has been deactivated"
+  },
+  "farmer": {
+    "profileUpdated": "Farm profile updated successfully",
+    "noAdvisorAssigned": "No advisor assigned yet"
+  },
+  "advisor": {
+    "farmerAssigned": "Farmer assigned successfully",
+    "profileUpdated": "Advisor profile updated"
+  },
+  "groups": {
+    "joined": "Joined group successfully",
+    "left": "Left group successfully"
+  }
+}
