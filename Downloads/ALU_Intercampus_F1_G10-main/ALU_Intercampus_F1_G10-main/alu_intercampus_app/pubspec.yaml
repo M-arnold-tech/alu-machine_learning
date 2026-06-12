@@ -1,0 +1,31 @@
+name: alu_intercampus_app
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/connecting.jpg
+    - assets/images/young-cute-woman-cap-glasses-posing-outside-showing-thumbs-up-high-quality-photo.jpg
+    - assets/images/company-employee-presenting-business-strategy-with-charts-monitor-planning-project-workmates-analyzing-financial-statistics-display-working-together-company-development.jpg
+    - assets/images/pitching_a_business.jpeg
+    - assets/images/sunrise-bali-jungle.jpg
+    - assets/images/The_Most_Common_Mistakes_When_Starting_a_New_Project.jpg
+    - assets/images/designing_workshopa.jpg
+    - assets/images/trash_box.jpg
